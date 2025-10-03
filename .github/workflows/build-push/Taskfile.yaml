@@ -7,7 +7,7 @@ env:
 
 tasks:
   my-trigger-workflow-dispatch: # manually for development
-    desc: Trigger GitHub Actions workflow by act 
+    desc: Trigger GitHub Actions workflow by act manual development
     cmds:
       - |
         # act  --env ACTIONS_STEP_DEBUG=true workflow_dispatch \
@@ -20,7 +20,7 @@ tasks:
           -W .github/workflows/my-build-push.yaml
 
   my-trigger-workflow-tag: 
-    desc: Trigger GitHub Actions workflow by act 
+    desc: Trigger GitHub Actions workflow by act like staging or production
     cmds:
       - |
         # act  --env ACTIONS_STEP_DEBUG=true workflow_dispatch \
