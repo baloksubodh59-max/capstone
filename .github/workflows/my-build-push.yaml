@@ -35,7 +35,7 @@ jobs:
       - name: Checkout Code
         # uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 #5.0.0
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 #4.2.2
-        # Add this new step to create the local tag
+   
       
       - name: filter
         id: filter
@@ -80,14 +80,8 @@ jobs:
         with:
           fetch-depth: 0
     
-      # - name: Install task
-      #   uses: ./.github/actions/setup-dependencies
       - name: Install task
-        uses: supplypike/setup-bin@8f79db9f91377db6f8c7058e3f36ba3fce40551e #v4.0.1
-        with:
-          uri: "https://github.com/go-task/task/releases/download/v3.45.4/task_linux_amd64.tar.gz"
-          name: task
-          version: v3.45.4
+        uses: ./.github/actions/setup-dependencies
 
       # - name: Login to Docker Hub
       #   if: ${{ !env.ACT }}

@@ -46,3 +46,7 @@ tasks:
     desc: run tests
     cmds:
       - npm run test
+  
+  amni:
+    cmd: |
+      echo "Hello World"
