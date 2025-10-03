@@ -49,6 +49,6 @@ tasks:
   
   amni:
     cmds: 
-      - cmd: |
-        echo "Hello World"
-        echo "Bye Bye"
+      - cmd: | 
+          echo "hello world!"
+        
