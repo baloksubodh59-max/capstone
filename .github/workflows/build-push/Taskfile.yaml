@@ -6,7 +6,7 @@ env:
 
 
 tasks:
-  my-trigger-workflow2:
+  my-trigger-workflow-dispatch:
     desc: Trigger GitHub Actions workflow by act 
     cmds:
       - |
@@ -14,11 +14,24 @@ tasks:
         act  workflow_dispatch \
           --container-architecture linux/amd64 \
           -s GITHUB_TOKEN="{{.GITHUB_TOKEN}}" \
-          -e {{.PWD}}/event.json \
+          -e {{.PWD}}/workflow-dispatch-event.json \
           -P ubuntu-24.04=catthehacker/ubuntu:act-22.04 \
           --directory ../../.. \
           -W .github/workflows/my-build-push.yaml
 
+  my-trigger-workflow-tag:
+    desc: Trigger GitHub Actions workflow by act 
+    cmds:
+      - |
+        # act  --env ACTIONS_STEP_DEBUG=true workflow_dispatch \
+        act  push \
+          --container-architecture linux/amd64 \
+          -s GITHUB_TOKEN="{{.GITHUB_TOKEN}}" \
+          -e {{.PWD}}/push-tag-event.json \
+          -P ubuntu-24.04=catthehacker/ubuntu:act-22.04 \
+          --directory ../../.. \
+          --no-skip-checkout \
+          -W .github/workflows/my-build-push.yaml
 
 # Notes:
 # --no-skip-checkout used for push trigger to get git tags

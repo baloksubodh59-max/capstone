@@ -2,16 +2,41 @@ name: My Build and Push Container Images
 
 on:
   workflow_dispatch:
+    inputs:
+      service:
+        description: "Service to build"
+        type: choice
+        required: true
+        options:
+          - services/go/api-golang
+          - services/node/api-node
+          - services/other/api-golang-migrator
+          - services/python/load-generator-python
+          - services/react/client-react
+      version:
+        description: "Version/tag to use (optional; defaults generating with git describe)"
+        required: false
+        type: string
+  push:
+    branches:
+      - main
+    paths:
+      - services/**
+    tags:
+      - "**@[0-9]*.[0-9]*.[0-9]*" # service/foo/bar@X.Y.Z
 
 jobs:
   filter:
     runs-on: ubuntu-24.04
     outputs:
-      services: ${{ steps.filter.outputs.changes }}
+      services: ${{ steps.set-output.outputs.services }}
+      environment: ${{ steps.set-output.outputs.environment }}
     steps:
       - name: Checkout Code
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 #5.0.0
-
+        # uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 #5.0.0
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 #4.2.2
+        # Add this new step to create the local tag
+      
       - name: filter
         id: filter
         uses: dorny/paths-filter@de90cc6fb38fc0963ad72b210f1f284cd68cea36 #v3
@@ -19,23 +44,49 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           filters: .github/utils/my-file-filters.yaml
       
+      - name: Set Output
+        id: set-output
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo 'services=["${{ inputs.service }}"]' >> "$GITHUB_OUTPUT"
+            echo 'environment=development' >> "$GITHUB_OUTPUT"
+
+          elif [[ "${{ github.ref_type }}" != "tag" ]]; then
+            tag="${GITHUB_REF_NAME}"        # e.g. service-a@1.2.3
+            svc="${tag%%@*}"
+            echo "services=[\"$svc\"]" >> "$GITHUB_OUTPUT"
+            echo 'environment=production' >> "$GITHUB_OUTPUT"
+
+          else # push to main
+            echo 'services=${{ steps.filter.outputs.changes }}' >> "$GITHUB_OUTPUT"
+            echo 'environment=staging' >> "$GITHUB_OUTPUT"
+          fi
+
   build-push-images:
     runs-on: ubuntu-24.04
     needs: filter
+    if: ${{ needs.filter.outputs.services != '[]' && needs.filter.outputs.services != '' }}
     strategy:
       fail-fast: false
       matrix:
-        # service: ${{ fromJson(needs.filter.outputs.services) }}
-        service: ["services/node/api-node"]
+        service: ${{ fromJson(needs.filter.outputs.services) }}
+        # service: ["services/node/api-node"]
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 #5.0.0
+        # uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 #5.0.0
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 #4.2.2
         with:
           fetch-depth: 0
+    
+      # - name: Install task
+      #   uses: ./.github/actions/setup-dependencies
       - name: Install task
-        uses: ./.github/actions/setup-dependencies
-
+        uses: supplypike/setup-bin@8f79db9f91377db6f8c7058e3f36ba3fce40551e #v4.0.1
+        with:
+          uri: "https://github.com/go-task/task/releases/download/v3.45.4/task_linux_amd64.tar.gz"
+          name: task
+          version: v3.45.4
 
       # - name: Login to Docker Hub
       #   if: ${{ !env.ACT }}
@@ -54,11 +105,20 @@ jobs:
         id: image-tag
         working-directory: ${{ matrix.service }}
         env:
-          ENVIRONMENT: production
+          ENVIRONMENT: ${{ needs.filter.outputs.environment }}
+          INPUT_VERSION: ${{ github.event_name == 'workflow_dispatch' && inputs.version || '' }}
           SERVICE: ${{ matrix.service }}
         run: | 
-          version=$(task utils:generate-version -- "$SERVICE")
-          image_tag=$(task utils:generate-version-tag -- "$SERVICE")
+          if [[ -n "$INPUT_VERSION" ]]; then
+            version=$INPUT_VERSION
+            image_tag=$(task utils:manual-version-tag -- "$INPUT_VERSION")
+          elif [[ "$ENVIRONMENT" == "production" ]]; then
+            version=$(task utils:generate-version -- "$SERVICE")
+            image_tag=$(task utils:generate-version-tag -- "$SERVICE")
+          else
+            version=$(task utils:generate-extended-version -- "$SERVICE")
+            image_tag=$(task utils:generate-extended-version-tag -- "$SERVICE")
+          fi
           echo "version=${version}" >> $GITHUB_OUTPUT
           echo "image_tag=${image_tag}" >> $GITHUB_OUTPUT
           # TODO: generate the actual version/tag

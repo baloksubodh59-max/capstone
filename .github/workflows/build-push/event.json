@@ -1,4 +1,7 @@
 {
+    "inputs": {
+        "service": "services/go/api-golang"
+    },
     "repository": {
         "default_branch": "main"
     }
