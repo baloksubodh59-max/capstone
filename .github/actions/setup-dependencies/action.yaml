@@ -6,7 +6,7 @@ inputs:
     default: "true"
   task_version:
     description: specify task version
-    default: v3.45.4
+    default: "v3.45.4"
 
 runs:
   using: composite
