@@ -37,12 +37,11 @@ jobs:
 
       - name: Update Manifests
         working-directory: ${{ inputs.service }}
-        run: |
+        run: | 
           task utils:update-image-tags-service \
-            NEW_TAG=${{ inputs.version }} \ 
+            NEW_TAG=${{ inputs.version }} \
             ENVIRONMENT=${{ inputs.environment }}
-
       
       - name: check diff
         run: |
-          git diff
+          git --no-pager diff
