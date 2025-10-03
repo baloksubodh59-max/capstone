@@ -1,4 +1,4 @@
-# api-golang
+# api-golang service
 
 ## Local setup/run
 

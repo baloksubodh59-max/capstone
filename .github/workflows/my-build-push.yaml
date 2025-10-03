@@ -51,7 +51,7 @@ jobs:
             echo 'services=["${{ inputs.service }}"]' >> "$GITHUB_OUTPUT"
             echo 'environment=development' >> "$GITHUB_OUTPUT"
 
-          elif [[ "${{ github.ref_type }}" != "tag" ]]; then
+          elif [[ "${{ github.ref_type }}" == "tag" ]]; then
             tag="${GITHUB_REF_NAME}"        # e.g. service-a@1.2.3
             svc="${tag%%@*}"
             echo "services=[\"$svc\"]" >> "$GITHUB_OUTPUT"
