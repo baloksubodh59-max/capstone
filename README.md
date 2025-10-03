@@ -1,7 +1,6 @@
 # Capstone – GitHub Actions Course Project
 
-This repository contains the capstone project for the [DevOps Directive GitHub Actions course](https://github.com/sidpalas/devops-directive-github-actions-course). Top-level directories include .github/ (workflows, composite actions, and config), services/ (the microservices), deploy/kubernetes/, utils/, plus a root Taskfile.yaml used by many workflows.  ￼
-
+This  contains the capstone project for the [DevOps Directive GitHub Actions course](https://github.com/sidpalas/devops-directive-github-actions-course). Top-level directories include .github/ (workflows, composite actions, and config), services/ (the microservices), deploy/kubernetes/, utils/, plus a root Taskfile.yaml used by many workflows.  ￼
 ---
 
 ## Repo structure
