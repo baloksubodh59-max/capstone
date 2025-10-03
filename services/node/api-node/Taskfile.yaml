@@ -51,5 +51,10 @@ tasks:
     desc: my amni test
     cmds: 
       - cmd: | 
-          echo "hello world!"
+          echo "amni world!"
+  abar:
+    desc: my abar test
+    cmds: 
+      - cmd: | 
+          echo "abar world!"
         
