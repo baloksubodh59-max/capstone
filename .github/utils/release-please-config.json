@@ -9,20 +9,8 @@
       "component": "services/go/api-golang",
       "release-type": "go"
     },
-    "services/node/api-node": {
-      "component": "services/node/api-node",
-      "release-type": "node"
-    },
     "services/other/api-golang-migrator": {
       "component": "services/other/api-golang-migrator"
-    },
-    "services/python/load-generator-python": {
-      "component": "services/python/load-generator-python",
-      "release-type": "python"
-    },
-    "services/react/client-react": {
-      "component": "services/react/client-react",
-      "release-type": "node"
     }
   },
   "plugins": [
