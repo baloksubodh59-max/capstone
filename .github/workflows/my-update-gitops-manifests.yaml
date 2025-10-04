@@ -54,7 +54,7 @@ jobs:
             NEW_TAG=${{ inputs.version }} \
             ENVIRONMENT=${{ inputs.environment }}
       
-      - name: check diff
+      - name: check diff git commit
         run: |
           git --no-pager diff
       
