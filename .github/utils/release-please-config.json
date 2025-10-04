@@ -7,9 +7,6 @@
     "services/go/api-golang": {
       "component": "services/go/api-golang",
       "release-type": "go"
-    },
-    "services/other/api-golang-migrator": {
-      "component": "services/other/api-golang-migrator"
     }
   },
   "plugins": [
