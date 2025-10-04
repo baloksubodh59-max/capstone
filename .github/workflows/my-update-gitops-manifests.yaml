@@ -56,7 +56,7 @@ jobs:
       
       - name: check diff git commit
         run: |
-          git --no-pager diff
+          git  diff
       
       - name: commit & push
         if: ${{ !env.ACT }}
