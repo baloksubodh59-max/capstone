@@ -127,7 +127,7 @@ jobs:
         with:
           context: ${{ matrix.service }}
           push: ${{ !env.ACT }}
-          tags: ${{ steps.image-tag.outputs.image-tag }}
+          tags: ${{ steps.image-tag.outputs.image_tag }}
           platforms: linux/amd64
           cache-from: type=gha
           cache-to: type=gha,mode=max
