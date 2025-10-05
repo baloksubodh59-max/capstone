@@ -1,4 +1,4 @@
-# api-golang service test update
+# api-golang service
 
 ## Local setup/run
 
