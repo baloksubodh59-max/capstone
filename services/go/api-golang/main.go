@@ -32,8 +32,6 @@ func init() {
 
 func main() {
 
-	// test comment
-	var student1 string = "John" //type is string
 	
 	r := gin.Default()
 	var tm time.Time
