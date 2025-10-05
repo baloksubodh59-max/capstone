@@ -1,4 +1,4 @@
-# api-golang service hudai
+# api-golang service 
 
 ## Local setup/run
 
