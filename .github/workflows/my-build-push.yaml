@@ -61,6 +61,8 @@ jobs:
             echo 'services=${{ steps.filter.outputs.changes }}' >> "$GITHUB_OUTPUT"
             echo 'environment=staging' >> "$GITHUB_OUTPUT"
           fi
+          echo 'services:${services}'
+          echo 'environment:${environment}'
 
   build-push-images:
     runs-on: ubuntu-24.04
