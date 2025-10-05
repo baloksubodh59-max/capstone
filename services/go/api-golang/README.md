@@ -1,4 +1,4 @@
-# api-golang service 144  s
+# api-golang service 
 
 ## Local setup/run
 
