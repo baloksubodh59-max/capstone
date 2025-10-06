@@ -1,4 +1,4 @@
-# api-golang service test67667667
+# api-golang service maybe git version release , building and pushing to registry and committing to latest changes version in config files in diploy file
 
 ## Local setup/run
 
