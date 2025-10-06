@@ -151,4 +151,4 @@ jobs:
           gh workflow run my-update-gitops-manifests.yaml \
             -f service=${{ matrix.service }} \
             -f version=${{ steps.image-tag.outputs.version }} \
-            -f environment=${{ needs.filter.outputs.environment }}
+            -f environment=${{ needs.filter.outputs.environment }} 
