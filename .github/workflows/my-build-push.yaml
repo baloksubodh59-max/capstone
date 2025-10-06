@@ -52,7 +52,7 @@ jobs:
             echo 'services=["${{ inputs.service }}"]' >> "$GITHUB_OUTPUT"
             echo 'environment=development' >> "$GITHUB_OUTPUT"
 
-          elif [[ "${{ github.ref_type }}" == "tag" ]]; 
+          elif [[ "${{ github.ref_type }}" == "tag" ]]; then
             echo "::debug::This is a debug message environment should be production"
             tag="${GITHUB_REF_NAME}"        # e.g. service-a@1.2.3
             svc="${tag%%@*}"
@@ -64,6 +64,7 @@ jobs:
             echo 'services=${{ steps.filter.outputs.changes }}' >> "$GITHUB_OUTPUT"
             echo 'environment=staging' >> "$GITHUB_OUTPUT"
           fi
+
           echo "services:${services}"
           echo "environment:${environment}"
 
