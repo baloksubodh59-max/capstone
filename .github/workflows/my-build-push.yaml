@@ -48,16 +48,19 @@ jobs:
         id: set-output
         run: |
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "::debug::This is a debug message environment should be development"
             echo 'services=["${{ inputs.service }}"]' >> "$GITHUB_OUTPUT"
             echo 'environment=development' >> "$GITHUB_OUTPUT"
 
-          elif [[ "${{ github.ref_type }}" == "tag" ]]; then
+          elif [[ "${{ github.ref_type }}" == "tag" ]]; 
+            echo "::debug::This is a debug message environment should be production"
             tag="${GITHUB_REF_NAME}"        # e.g. service-a@1.2.3
             svc="${tag%%@*}"
             echo "services=[\"$svc\"]" >> "$GITHUB_OUTPUT"
             echo 'environment=production' >> "$GITHUB_OUTPUT"
 
           else # push to main
+            echo "::debug::This is a debug message environment should be staging"
             echo 'services=${{ steps.filter.outputs.changes }}' >> "$GITHUB_OUTPUT"
             echo 'environment=staging' >> "$GITHUB_OUTPUT"
           fi
