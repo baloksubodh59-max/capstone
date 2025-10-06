@@ -138,13 +138,16 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Trigger Diploy
-        if: ${{ !env.ACT }}
+      # Trigger deploy as a separate workflow to:
+      #   1. enable running it manually via workflow_dispatch
+      #   2. keep workflows smaller and more focused
+      # We could use reuseable workflow (with workflow_call trigger... but being able to trigger manually is nice)
+      - name: Trigger Deploy
+        if: ${{ !env.ACT }} # Don't trigger deploy when running locally
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-        
           gh workflow run my-update-gitops-manifests.yaml \
-          -f service=${{ matrix.service }} \ 
-          -f version=${{ steps.image-tag.outputs.version }} \ 
-          -f environment=${{ needs.filter.outputs.environment }} \
+            -f service=${{ matrix.service }} \
+            -f version=${{ steps.image-tag.outputs.version }} \
+            -f environment=${{ needs.filter.outputs.environment }}
