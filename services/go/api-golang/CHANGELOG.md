@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.4](https://github.com/baloksubodh59-max/capstone/compare/services/go/api-golang@1.0.3...services/go/api-golang@1.0.4) (2025-10-06)
+
+
+### Chores
+
+* little bit update ([#28](https://github.com/baloksubodh59-max/capstone/issues/28)) ([ef041fa](https://github.com/baloksubodh59-max/capstone/commit/ef041fa7874587d73149424536c8a90f59651004))
+
 ## [1.0.3](https://github.com/baloksubodh59-max/capstone/compare/services/go/api-golang@1.0.2...services/go/api-golang@1.0.3) (2025-10-06)
 
 
