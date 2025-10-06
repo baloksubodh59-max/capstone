@@ -1,2 +1,2 @@
 # Load Generator
-hudai hudai
+A simple load generator service
