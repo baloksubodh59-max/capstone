@@ -1,4 +1,4 @@
 {
-  "services/go/api-golang": "1.0.2",
-  "services/other/api-golang-migrator": "1.0.2"
+  "services/go/api-golang": "1.0.3",
+  "services/other/api-golang-migrator": "1.0.3"
 }
