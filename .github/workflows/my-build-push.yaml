@@ -147,6 +147,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+        
           gh workflow run my-update-gitops-manifests.yaml \
             -f service=${{ matrix.service }} \
             -f version=${{ steps.image-tag.outputs.version }} \
