@@ -56,12 +56,14 @@ jobs:
       
       - name: check diff git commit
         run: |
-          git  diff
+          git --no-pager diff
       
-      - name: commit & push
+      # First attempt, we used stefanzweifel/git-auto-commit-action but ran into issues with concurrent execution and the working branch being outdated
+      # Alternatively, we could use peter-evans/create-pull-request to generate a PR instead
+      - name: Commit & push (via Task)
         if: ${{ !env.ACT }}
         working-directory: ${{ inputs.service }}
         run: |
           task utils:git:commit-push \
-          COMMIT_MSG=${{ steps.generate-commit-message.outputs.commit_message }} \
-          BRANCH=main
+            COMMIT_MSG="${{ steps.generate-commit-message.outputs.commit_message }}" \
+            BRANCH=main
